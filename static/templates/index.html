@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-g">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Pneumonia Detector</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+    .card { margin-top: 50px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .card-header { background-color: #0d6efd; color: white; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card text-center">
+          <div class="card-header">
+            Chest X-Ray Analysis 🩺
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Upload Image for Pneumonia Detection</h5>
+            <p class="card-text text-muted">Please upload a chest X-ray image (JPEG or PNG format).</p>
+            <form id="upload-form" method="post" enctype="multipart/form-data">
+              <div class="mb-3">
+                <input class="form-control" type="file" name="file" required>
+              </div>
+              <button id="analyze-btn" type="submit" class="btn btn-primary w-100">
+                <span id="btn-text">Analyze Image</span>
+                <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript to show a loading spinner on form submission
+    const form = document.getElementById('upload-form');
+    const analyzeBtn = document.getElementById('analyze-btn');
+    const btnText = document.getElementById('btn-text');
+    const spinner = document.getElementById('spinner');
+
+    form.addEventListener('submit', function() {
+      btnText.textContent = 'Analyzing...';
+      spinner.classList.remove('d-none');
+      analyzeBtn.disabled = true;
+    });
+  </script>
+</body>
+</html>

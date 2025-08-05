@@ -1,0 +1,15 @@
+# Netlify configuration file
+
+[build]
+  # This command tells Netlify to install the Python packages.
+  command = "pip install -r requirements.txt"
+  # This is the folder that contains our serverless function.
+  functions = "netlify/functions/"
+  # This is the folder that contains our static files like HTML.
+  publish = "static/"
+
+[[redirects]]
+  # This rule tells Netlify to send all web traffic to our Python function.
+  from = "/*"
+  to = "/.netlify/functions/api"
+  status = 200
