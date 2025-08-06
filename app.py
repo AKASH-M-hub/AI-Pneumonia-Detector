@@ -2,14 +2,13 @@ import os
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.models import load_model
-from flask import Flask, request, render_template, redirect, url_for, send_from_directory
+from flask import Flask, request, render_template, send_from_directory
 
 app = Flask(__name__)
 
 UPLOAD_FOLDER = 'uploads'
 MODEL_FILE = 'pneumonia_detector_model.h5'
 
-# Load the model
 model = load_model(MODEL_FILE)
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -30,10 +29,10 @@ def upload_file():
         if file:
             filepath = os.path.join(UPLOAD_FOLDER, file.filename)
             file.save(filepath)
-            
+
             preprocessed_image = preprocess_image(filepath)
             prediction = model.predict(preprocessed_image)
-            
+
             result_data = {}
             if prediction[0][0] < 0.5:
                 result_data['text'] = "Prediction: NORMAL"
@@ -43,9 +42,9 @@ def upload_file():
                 result_data['text'] = "Prediction: PNEUMONIA"
                 result_data['confidence'] = f"Confidence: {100*prediction[0][0]:.2f}%"
                 result_data['class'] = 'danger'
-            
+
             return render_template('result.html', result=result_data, image_name=file.filename)
-            
+
     return render_template('index.html')
 
 @app.route('/uploads/<filename>')
